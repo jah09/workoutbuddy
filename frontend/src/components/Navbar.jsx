@@ -9,7 +9,7 @@ const Navbar = () => {
       </Link> */}
 
       <div
-        className="mb-2 sm:mb-0 flex flex-row
+        className="mb-2 sm:mb-0 flex 
   "
       >
         <div className="h-14 w-14 self-center mr-2 bg-myfontcolor rounded-md">
@@ -25,19 +25,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="sm:mb-0 self-center">
-        <a
-          href="#"
-          className="text-md no-underline text-myfontcolor hover:text-blue-dark ml-2 px-1"
-        >
+      <div className="sm:mb-0 self-center  mr-4">
+        <button className="text-md no-underline text-myfontcolor  rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10">
           Login
-        </a>
-        <a
+        </button>
+        <button
           href="#"
-          className="text-md no-underline text-myfontcolor hover:text-blue-dark ml-2 px-1"
+          className="text-md no-underline text-myfontcolor hover:bg-primarycolor hover:text-black  ml-2 border border-primarycolor rounded-md  w-24 h-10"
         >
           Sign up
-        </a>
+        </button>
       </div>
     </div>
   );
