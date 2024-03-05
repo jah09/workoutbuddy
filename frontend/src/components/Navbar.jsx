@@ -26,7 +26,7 @@ const Navbar = () => {
       </div>
 
       <div className="sm:mb-0 self-center  mr-4">
-        <button className="text-md no-underline text-myfontcolor  rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10">
+        <button className="text-md no-underline    rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10">
           Login
         </button>
         <button

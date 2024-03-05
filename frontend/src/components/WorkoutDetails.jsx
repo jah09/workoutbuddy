@@ -23,7 +23,7 @@ const WorkoutDetails = ({ workout }) => {
             ></path>
           </svg>
           <div className="flex flex-col ml-3">
-            <div className="font-medium leading-none text-myfontcolor">
+            <div className="font-medium leading-none text-primarycolor">
               {workout.title}
             </div>
             <p className="text-sm text-gray-600 leading-none mt-1 text-myfontcolor">
