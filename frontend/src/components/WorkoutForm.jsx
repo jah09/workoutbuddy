@@ -28,7 +28,7 @@ const WorkoutForm = () => {
       setLoad("");
       setReps("");
       setError();
-      console.log("New workout added", json);
+      console.log("New workout added, test only in line 31", json);
       dispatch({ type: "CREATE_WORKOUT", payload: json });
     }
   };
