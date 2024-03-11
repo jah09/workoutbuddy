@@ -1,37 +1,43 @@
 import React, { useState } from "react";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import axios from "axios";
 const WorkoutForm = () => {
-  const { dispatch } = useWorkoutsContext();
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
+
   //function for submit button
   const handleSubmit = async (e) => {
     e.preventDefault();
     const workout = { title, load, reps };
+    try {
+      const response = await axios.post("/api/workouts", workout);
+      console.log("the res is ", response);
 
-    //now we want to fetch api to post a request
-    const response = await fetch("/api/workouts", {
-      method: "POST",
-      body: JSON.stringify(workout), //dili maka send sa workout na object so e turn sya into JSON
-      //header property pra mo ingon nga content is Json
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      setError(json.error);
-    } else {
-      setTitle("");
-      setLoad("");
-      setReps("");
-      setError();
-      console.log("New workout added, test only in line 31", json);
-      dispatch({ type: "CREATE_WORKOUT", payload: json });
+      if (response.status === 200) {
+        setTitle("");
+        setLoad("");
+        setReps("");
+        setEmptyFields([]);
+        setError();
+      }
+        // if (response.status === 400) {
+        //   setError(response.error);
+        //   setEmptyFields(response.emptyFields);
+        // }
+    } catch (error) {
+      // Handle any network errors or errors thrown during the request
+     if (error.response && error.response.data) {
+       setError(error.response.data.error);
+       setEmptyFields(error.response.data.emptyFields);
+     } else {
+       setError("An unexpected error occurred");
+     }
+     console.error("Error:", error);
     }
   };
+
   return (
     <div className="mt-10 p-2  ">
       <div className=" p-10 rounded-lg bg-[#09150c]   ">
@@ -39,16 +45,26 @@ const WorkoutForm = () => {
           <h3 className="text-xl font-medium text-myfontcolor text-center">
             Add a new Workout
           </h3>
+
           <input
-            className="mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            className={
+              emptyFields.includes("title")
+                ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+                : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            }
             value={title}
             placeholder="Exercise title"
             type="text"
             onChange={(e) => setTitle(e.target.value)}
           />
+
           <br />
           <input
-            className="mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            className={
+              emptyFields.includes("load")
+                ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+                : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            }
             placeholder="Load (in kg )"
             type="number"
             value={load}
@@ -56,7 +72,11 @@ const WorkoutForm = () => {
           />
           <br />
           <input
-            className="mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            className={
+              emptyFields.includes("reps")
+                ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+                : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
+            }
             placeholder="Reps"
             type="number"
             value={reps}

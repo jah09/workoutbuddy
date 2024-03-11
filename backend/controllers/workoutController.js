@@ -25,7 +25,22 @@ const getWorkout = async (req, res) => {
 //create a new workout
 const createWorkout = async (req, res) => {
   const { title, load, reps } = req.body;
-
+  let emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!load) {
+    emptyFields.push("load");
+  }
+  if (!reps) {
+    emptyFields.push("reps");
+  }
+  // greater than 0
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill all fields", emptyFields });
+  }
   //add docs to db
   try {
     const workout = await Workout.create({
@@ -40,7 +55,7 @@ const createWorkout = async (req, res) => {
 };
 //delete a workout
 const deleteWorkout = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Not such workouts" });
   }
@@ -54,7 +69,7 @@ const deleteWorkout = async (req, res) => {
 //update a workout
 const updateWorkout = async (req, res) => {
   const { id } = req.params;
- // console.log("Line 57",req.params)
+  // console.log("Line 57",req.params)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Not such workouts" });
   }
@@ -75,5 +90,5 @@ module.exports = {
   getWorkout,
   getWorkouts,
   deleteWorkout,
-  updateWorkout
+  updateWorkout,
 };
