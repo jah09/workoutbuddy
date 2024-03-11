@@ -1,6 +1,14 @@
 import React from "react";
-
+import { TrashIcon } from "@radix-ui/react-icons";
+import { formatDistanceToNow } from "date-fns";
 const WorkoutDetails = ({ workout }) => {
+  const handleClick = async () => {
+    const response = await fetch("/api/workouts/" + workout._id, {
+      method: "DELETE",
+    });
+    const json = await response.json();
+   
+  };
   return (
     <div
       className="flex flex-col p-6 mb-2 bg-[#09150c] shadow-md hover:shodow-lg rounded-2xl "
@@ -16,21 +24,34 @@ const WorkoutDetails = ({ workout }) => {
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             ></path>
           </svg>
-          <div className="flex flex-col ml-3">
-            <div className="font-medium leading-none text-primarycolor">
-              {workout.title}
+          <div className="flex flex-col ml-3  ">
+            <div className="flex   w-[31rem]">
+              <div className="font-medium leading-none text-primarycolor flex-1  ">
+                {workout.title}
+              </div>{" "}
+              <div className="flex justify-end   ">
+                <a onClick={handleClick} className="cursor-pointer">
+                  <TrashIcon className=" text-primarycolor w-8 h-6" />
+                </a>
+              </div>
             </div>
+
             <p className="text-sm text-gray-600 leading-none mt-1 text-myfontcolor">
               Reps: {workout.reps}
             </p>
             <p className="text-sm text-gray-600 leading-none mt-1 text-myfontcolor">
               Load: {workout.load}
+            </p>
+            <p className="text-sm text-gray-600 leading-none mt-1 text-myfontcolor">
+              {formatDistanceToNow(new Date(workout.createdAt), {
+                addSuffix: true,
+              })}
             </p>
           </div>
         </div>
