@@ -1,1 +1,1 @@
-Self study in MonggoDB, ExpressJS, ReactJS, NodeJs.
+ MonggoDB, ExpressJS, ReactJS, NodeJs.
