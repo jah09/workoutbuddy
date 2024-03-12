@@ -37,7 +37,9 @@ const Home = () => {
     };
     fetchWorkouts();
   }, []);
-
+const handleNewWorkout = (newWorkout) => {
+  setWorkouts((prevWorkouts) => [newWorkout,...prevWorkouts ]);
+};
   return (
     <div className="px-16 py-10   flex   ">
       <div className=" w-1/2  ">
@@ -55,7 +57,7 @@ const Home = () => {
         </div>
       </div>
       <div className="w-1/2 p-6">
-        <WorkoutForm />
+        <WorkoutForm onNewWorkout={handleNewWorkout}/>
       </div>
     </div>
   );
