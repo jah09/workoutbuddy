@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const WorkoutForm = ({ onNewWorkout }) => {
+const WorkoutForm = ({ onNewWorkout, isEdit }) => {
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
@@ -16,17 +16,13 @@ const WorkoutForm = ({ onNewWorkout }) => {
       console.log("the res is ", response);
 
       if (response.status === 200) {
-          onNewWorkout(response.data);
+        onNewWorkout(response.data);
         setTitle("");
         setLoad("");
         setReps("");
         setEmptyFields([]);
         setError();
       }
-      // if (response.status === 400) {
-      //   setError(response.error);
-      //   setEmptyFields(response.emptyFields);
-      // }
     } catch (error) {
       // Handle any network errors or errors thrown during the request
       if (error.response && error.response.data) {
@@ -53,7 +49,7 @@ const WorkoutForm = ({ onNewWorkout }) => {
                 ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
                 : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
             }
-            value={title}
+            value={  title}
             placeholder="Exercise title"
             type="text"
             onChange={(e) => setTitle(e.target.value)}
