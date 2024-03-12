@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const WorkoutForm = () => {
+const WorkoutForm = ({ onNewWorkout }) => {
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
@@ -16,25 +16,26 @@ const WorkoutForm = () => {
       console.log("the res is ", response);
 
       if (response.status === 200) {
+          onNewWorkout(response.data);
         setTitle("");
         setLoad("");
         setReps("");
         setEmptyFields([]);
         setError();
       }
-        // if (response.status === 400) {
-        //   setError(response.error);
-        //   setEmptyFields(response.emptyFields);
-        // }
+      // if (response.status === 400) {
+      //   setError(response.error);
+      //   setEmptyFields(response.emptyFields);
+      // }
     } catch (error) {
       // Handle any network errors or errors thrown during the request
-     if (error.response && error.response.data) {
-       setError(error.response.data.error);
-       setEmptyFields(error.response.data.emptyFields);
-     } else {
-       setError("An unexpected error occurred");
-     }
-     console.error("Error:", error);
+      if (error.response && error.response.data) {
+        setError(error.response.data.error);
+        setEmptyFields(error.response.data.emptyFields);
+      } else {
+        setError("An unexpected error occurred");
+      }
+      console.error("Error:", error);
     }
   };
 
