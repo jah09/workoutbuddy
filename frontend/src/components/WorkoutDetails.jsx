@@ -34,7 +34,7 @@ const WorkoutDetails = ({ workout, onDelete, onEdit }) => {
                   <FaTrash className=" text-primarycolor w-8 h-6" />
                 </a> */}
                 <WorkoutDelete onDelete={onDelete} workout={workout} />
-                <WorkoutEdit onEdit={onEdit} workout={workout} />
+                <WorkoutEdit onEdit={() => onEdit(workout)} workout={workout} />
               </div>
             </div>
 
