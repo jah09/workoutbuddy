@@ -37,11 +37,9 @@ const Home = () => {
   };
 
   //edit a workout
-  const handleEditWorkout = async (workout) => {
-    // e.preventDefault();
-    setEditWorkout;
-    workout;
+  const handleEdit = (workout) => {
     setIsEdit(true);
+    setEditWorkout(workout);
   };
   return (
     <div className="px-16 py-10   flex   ">
@@ -54,7 +52,7 @@ const Home = () => {
                 workout={workout}
                 key={workout._id}
                 onDelete={handleDeleteWorkout}
-                onEdit={() => handleEditWorkout(workout)}
+                handleEdit={handleEdit}
               />
             ))
           ) : (
@@ -68,7 +66,7 @@ const Home = () => {
         <WorkoutForm
           onNewWorkout={handleNewWorkout}
           isEdit={isEdit}
-          editWorkout={editWorkout}
+          workout={editWorkout}
         />
       </div>
     </div>
