@@ -7,7 +7,7 @@ import WorkoutForm from "../components/WorkoutForm";
 const Home = () => {
   const [workouts, setWorkouts] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
- 
+  const [editWorkout, setEditWorkout] = useState(null);
   //render once when components render
   useEffect(() => {
     fetchWorkouts();
@@ -37,9 +37,10 @@ const Home = () => {
   };
 
   //edit a workout
-  const handleEditWorkout = async () => {
+  const handleEditWorkout = async (workout) => {
     // e.preventDefault();
-   
+    setEditWorkout;
+    workout;
     setIsEdit(true);
   };
   return (
@@ -53,7 +54,7 @@ const Home = () => {
                 workout={workout}
                 key={workout._id}
                 onDelete={handleDeleteWorkout}
-                onEdit={handleEditWorkout}
+                onEdit={() => handleEditWorkout(workout)}
               />
             ))
           ) : (
@@ -64,7 +65,11 @@ const Home = () => {
         </div>
       </div>
       <div className="w-1/2 p-6">
-        <WorkoutForm onNewWorkout={handleNewWorkout} isEdit={isEdit} />
+        <WorkoutForm
+          onNewWorkout={handleNewWorkout}
+          isEdit={isEdit}
+          editWorkout={editWorkout}
+        />
       </div>
     </div>
   );
