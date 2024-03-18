@@ -23,7 +23,24 @@ const Home = () => {
     }
   };
   const handleNewWorkout = (newWorkout) => {
-    setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
+    //This line finds the index of the existing workout in the workouts array based on its _id. It uses the findIndex method, which returns the index of the first element in the array that satisfies the provided testing function. If no element satisfies the testing function, it returns -1.
+    const existingWorkoutIndex = workouts.findIndex(
+      (workout) => workout._id === newWorkout._id
+    );
+
+    //This conditional statement checks if the existingWorkoutIndex is not equal to -1, indicating that an existing workout with the same _id as newWorkout was found in the workouts array.
+    if (existingWorkoutIndex !== -1) {
+      // If the workout already exists, replace it with the updated one
+      //If an existing workout is found, it updates the workouts array by replacing the existing workout with the newWorkout. It does this by creating a copy of the previous workouts array ([...prevWorkouts]), replacing the workout at existingWorkoutIndex with newWorkout, and then setting the state with the updated array.
+      setWorkouts((prevWorkouts) => {
+        const updatedWorkouts = [...prevWorkouts];
+        updatedWorkouts[existingWorkoutIndex] = newWorkout;
+        return updatedWorkouts;
+      });
+    } else {
+      // If it's a new workout, add it to the workout list
+      setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
+    }
   };
   //delete a workout
   const handleDeleteWorkout = async (id) => {
@@ -41,6 +58,10 @@ const Home = () => {
     setIsEdit(true);
     setEditWorkout(workout);
   };
+  const handleToggleEdit = () => {
+    setIsEdit(!isEdit); // Toggle the edit mode
+  };
+
   return (
     <div className="px-16 py-10   flex   ">
       <div className=" w-1/2  ">
@@ -66,6 +87,7 @@ const Home = () => {
         <WorkoutForm
           onNewWorkout={handleNewWorkout}
           isEdit={isEdit}
+          toggleEdit={handleToggleEdit}
           workout={editWorkout}
         />
       </div>
