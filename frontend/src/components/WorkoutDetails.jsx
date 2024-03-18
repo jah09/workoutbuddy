@@ -8,7 +8,7 @@ import WorkoutForm from "./WorkoutForm";
 const WorkoutDetails = ({ workout, onDelete, handleEdit }) => {
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleEditClick = () => {};
+   
   return (
     <div
       className="flex flex-col p-6 mb-2 bg-[#09150c] shadow-md hover:shodow-lg rounded-2xl "
