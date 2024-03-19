@@ -6,6 +6,7 @@ require("dotenv").config();
 const mongoose = require("mongoose"); //connect to db
 const express = require("express");
 const workoutRoutes = require("./routes/workout");
+const userRoutes = require("./routes/user");
 //express app start
 const app = express();
 const cors = require('cors');
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 
 //use that routes in our app->route //routes
 app.use('/api/workouts', workoutRoutes); //use all routes attach from workoutRoutes
-
+app.use("/api/user", userRoutes); 
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI) //it will take a little time to connecct so aysnc siya maong mag .promise
