@@ -63,10 +63,10 @@ const Home = () => {
   };
 
   return (
-    <div className="px-16 py-10   flex   ">
+    <div className="px-16 py-10   flex ">
       <div className=" w-1/2  ">
         <h1 className="text-2xl text-myfontcolor font-medium "> Home page</h1>
-        <div className="mt-10">
+        <div className="mt-10   ">
           {workouts && workouts.length > 0 ? (
             workouts.map((workout) => (
               <WorkoutDetails
