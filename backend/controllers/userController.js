@@ -1,22 +1,26 @@
-const User=require('../models/userModel');
+const User = require("../models/userModel");
 
 //login user
-const loginUser=async(req,res)=>{
-res.json({mssg:'Login user'});
-}
+const loginUser = async (req, res) => {
+  res.json({ mssg: "Login user" });
+};
 
-
-
-//signup
+// Function to handle user signup
 const signupUser = async (req, res) => {
-  const {email, password}=req.body;
+  // Extract email and password from request body
+  const { email, password } = req.body;
   try {
-    const user=await User.signup(email,password);
-    res.status(200).json({email, user});
+    // Attempt to signup the user using the User.signup() method
+    const user = await User.signup(email, password);
+    // If signup is successful, send response with status code 200 and user data
+    res.status(200).json({ email, user });
   } catch (error) {
-      res.status(400).json({ error: error.message });
+    // If an error occurs during signup, send response with status code 400 and error message
+    res.status(400).json({ error: error.message });
   }
+  // Note: This line will not execute because it's placed after the try-catch block
+  // This seems to be a misplaced line of code
   res.json({ mssg: "signup user" });
 };
 
-module.exports = { loginUser ,signupUser};
+module.exports = { loginUser, signupUser };
