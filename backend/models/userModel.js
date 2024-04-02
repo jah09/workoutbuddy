@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+
 const userSchema = new Schema({
   //path: { type: String, required: true },
 
@@ -47,6 +48,25 @@ userSchema.statics.signup = async function (email, password) {
   const user = await this.create({ email, password: hashed });
 
   // Return the newly created user document
+  return user;
+};
+
+//static login method
+userSchema.statics.login = async function (email, password) {
+  if (!email || !password) {
+    // Throw an error if either email or password is missing
+    throw Error("All field must be filled");
+  }
+  const user = await this.findOne({ email });
+  if (!user) {
+    // Throw an error if the email is already in use
+    throw Error("Incorrect email");
+  }
+  //password- plain ge enter ni user for login .. user.password- naa na sa database
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) {
+    throw Error("Incorrect password");
+  }
   return user;
 };
 module.exports = mongoose.model("User", userSchema);
