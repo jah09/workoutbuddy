@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  //sign up button
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(email, password);
+  };
   return (
     <div className="  p-4 py-4 justify-center flex ">
       <div className="max-w-lg w-full   mt-10">
@@ -12,31 +19,36 @@ const Login = () => {
             <p className="mt-4 text-center text-myfontcolor">
               Sign in to continue
             </p>
-            <form method="POST" action="#" className="mt-8 space-y-6">
-              <div className="rounded-md shadow-sm">
+
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+              <div className="rounded-md shadow-sm  ">
                 <div>
-                  <label className="sr-only" htmlFor="email">
+                  <label className="sr-only text-white " htmlFor="email">
                     Email address
                   </label>
                   <input
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email address"
                     className="appearance-none relative block w-full px-3 py-4     bg-[#020904] text-myfontcolor rounded-md focus:outline-none   focus:z-10 sm:text-sm"
                     required=""
-                    autoComplete="email"
                     type="email"
                     name="email"
                     id="email"
+                    value={email}
                   />
                 </div>
                 <div className="mt-4">
-                  <label className="sr-only">Password</label>
+                  <label className="sr-only text-white " htmlFor="password">
+                    Password
+                  </label>
                   <input
                     placeholder="Password"
                     className="appearance-none relative block w-full px-3 py-4     bg-[#020904]  text-white rounded-md focus:outline-none    focus:z-10 sm:text-sm"
                     required=""
-                    autoComplete="current-password"
                     type="password"
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                   />
                 </div>
