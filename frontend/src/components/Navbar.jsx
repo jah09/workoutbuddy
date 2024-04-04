@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
 import Dumbell from "../assets/dumbbell.png";
 const Navbar = () => {
+  const { logout } = useLogout();
+  const handleLogout = async () => {
+    logout();
+  };
   return (
     <div className="  flex flex-col text-center content-center sm:flex-row sm:text-left sm:justify-between py-3 px-6 bg-wheat shadow-md sm:items-baseline w-full shadow-gray-900">
       {/* <Link to="/">
@@ -26,6 +31,12 @@ const Navbar = () => {
       </div>
 
       <div className="sm:mb-0 self-center  mr-4">
+        <button
+          className="text-md no-underline    rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10 mr-2"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
         <Link to="/login">
           <button className="text-md no-underline    rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10">
             Login
