@@ -15,7 +15,7 @@ const loginUser = async (req, res) => {
     //create a token
     const token = createToken(user.id);
     // If signup is successful, send response with status code 200 and user data
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token,mss:"Successfully login"});
   } catch (error) {
     // If an error occurs during signup, send response with status code 400 and error message
     res.status(400).json({ error: error.message });
@@ -33,7 +33,7 @@ const signupUser = async (req, res) => {
     //create a token
     const token = createToken(user.id);
     // If signup is successful, send response with status code 200 and user data
-    res.status(200).json({ email, token, mssg: "signup user" });
+    res.status(200).json({ email, token, mssg: "Successfully signup" });
   } catch (error) {
     // If an error occurs during signup, send response with status code 400 and error message
     res.status(400).json({ error: error.message });
