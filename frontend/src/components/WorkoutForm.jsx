@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
   //const [formData, setFormData] = useState({ title: "", load: "", reps: "" });
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
 
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
-
+  const { user } = useAuthContext();
   useEffect(() => {
     if (isEdit && workout) {
       // If in edit mode and workout data is provided, set the form data to the workout data
@@ -26,12 +27,22 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
   //function for submit button
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      setError("You must be login");
+      return;
+    }
     //const workout = { title, load, reps };
+    //for editing then update
     if (isEdit) {
       try {
         const response = await axios.put(
           `/api/workouts/${formData._id}`,
-          formData
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         if (response.status === 200) {
           onNewWorkout(response.data);
@@ -49,8 +60,13 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
         }
       }
     } else {
+      //for inserting workout
       try {
-        const response = await axios.post("/api/workouts", formData);
+        const response = await axios.post("/api/workouts", formData, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
         if (response.status === 200) {
           onNewWorkout(response.data);
@@ -89,7 +105,7 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
 
           <input
             className={
-              emptyFields.includes("title")
+              emptyFields?.includes("title")
                 ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
                 : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
             }
@@ -103,7 +119,7 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
           <br />
           <input
             className={
-              emptyFields.includes("load")
+              emptyFields?.includes("load")
                 ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
                 : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
             }
@@ -116,7 +132,7 @@ const WorkoutForm = ({ onNewWorkout, workout, isEdit, toggleEdit }) => {
           <br />
           <input
             className={
-              emptyFields.includes("reps")
+              emptyFields?.includes("reps")
                 ? "ring-offset-2 ring-2 ring-red-500 mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
                 : "mb-2 mt-4 p-4 rounded-md w-full bg-myfontcolor text-black outline-none"
             }
