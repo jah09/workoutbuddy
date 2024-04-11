@@ -97,7 +97,7 @@ const Signup = () => {
             <span className="text-myfontcolor">Already have an account?</span>
             <a
               className="font-medium text-myfontcolor pl-2 underline "
-              href="/register"
+              href="/login"
             >
               Login
             </a>

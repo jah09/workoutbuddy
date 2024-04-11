@@ -3,21 +3,32 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
+
   const [workouts, setWorkouts] = useState([]);
+  const { user } = useAuthContext();
   const [isEdit, setIsEdit] = useState(false);
   const [editWorkout, setEditWorkout] = useState(null);
+ 
   //render once when components render
   useEffect(() => {
-    fetchWorkouts();
-  }, []);
+    if (user) {
+      fetchWorkouts();
+    }
+  }, [user]);
   //retrieve the workouts
   const fetchWorkouts = async () => {
     try {
-      const response = await axios.get("/api/workouts").then((res) => {
-        setWorkouts(res.data); // Assuming json is an array of workouts or an object
+      const response = await axios.get("/api/workouts", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       });
+
+      // Assuming response.data is an array of workouts or an object
+      setWorkouts(response.data);
     } catch (error) {
       console.error("Error fetching workouts: ", error);
     }
@@ -44,8 +55,15 @@ const Home = () => {
   };
   //delete a workout
   const handleDeleteWorkout = async (id) => {
+    if (!user) {
+      return;
+    }
     try {
-      await axios.delete(`/api/workouts/${id}`);
+      await axios.delete(`/api/workouts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       // After successful deletion, reload data from the server
       fetchWorkouts();
     } catch (error) {

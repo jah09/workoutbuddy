@@ -4,6 +4,7 @@ import { useLogout } from "../hooks/useLogout";
 import Dumbell from "../assets/dumbbell.png";
 import { useAuthContext } from "../hooks/useAuthContext";
 const Navbar = () => {
+  
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const handleLogout = async () => {
@@ -35,7 +36,7 @@ const Navbar = () => {
       <div className="sm:mb-0 self-center  mr-4 flex">
         {user && (
           <div>
-            <span className="text-white mr-2">{user.email}</span>
+            <span className="text-white mr-2">Welcome, {user.email} !</span>
             <button
               className="text-md no-underline    rounded-md bg-primarycolor text-black hover:bg-transparent hover:border hover:border-primarycolor hover:text-myfontcolor w-24 h-10 mr-2"
               onClick={handleLogout}

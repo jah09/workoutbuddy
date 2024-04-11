@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
         <div className="bg-[#09150c] rounded-lg shadow-xl overflow-hidden">
           <div className="p-8">
             <h2 className="text-center text-3xl font-extrabold text-myfontcolor ">
-              Welcome to WorkoutBuddy
+              Welcome back 
             </h2>
             <p className="mt-4 text-center text-myfontcolor">
               Sign in to continue
