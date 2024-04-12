@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
 export const useLogin = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const { dispatch } = useAuthContext();
@@ -17,7 +17,7 @@ export const useLogin = () => {
       body: JSON.stringify({ email, password }),
     });
 
-    // const json = await response.json(); 
+    // const json = await response.json();
 
     try {
       const json = await response.json();
@@ -29,7 +29,7 @@ export const useLogin = () => {
       }
       if (response.ok) {
         alert(json.mss);
-navigate('/')
+        navigate("/");
         //save the user to local storage
 
         localStorage.setItem("user", JSON.stringify(json));
